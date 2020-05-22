@@ -3,8 +3,8 @@ import Transaction from '../models/Transaction';
 
 interface Request {
   title: string;
-  type: "income" | "outcome";
-  value: number
+  type: 'income' | 'outcome';
+  value: number;
 }
 
 class CreateTransactionService {
@@ -19,20 +19,23 @@ class CreateTransactionService {
     /**
      * [ ] - Verificar se existe saldo para retirada
      */
+    if (!['income', 'output'].includes(type)) {
+      throw new Error('Transaction type is invalid');
+    }
 
-    const { total } = this.transactionsRepository.getBalance()
+    const { total } = this.transactionsRepository.getBalance();
 
-    if (type === "outcome" && total < value) {
-      throw new Error("You do not have enough balance")
+    if (type === 'outcome' && total < value) {
+      throw new Error('You do not have enough balance');
     }
 
     const transaction = this.transactionsRepository.create({
       title,
       type,
-      value
-    })
+      value,
+    });
 
-    return transaction
+    return transaction;
   }
 }
 
