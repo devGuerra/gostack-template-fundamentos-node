@@ -19,7 +19,7 @@ class CreateTransactionService {
     /**
      * [ ] - Verificar se existe saldo para retirada
      */
-    if (!['income', 'output'].includes(type)) {
+    if (!['income', 'outcome'].includes(type)) {
       throw new Error('Transaction type is invalid');
     }
 
